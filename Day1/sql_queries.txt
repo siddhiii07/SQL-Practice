@@ -1,0 +1,20 @@
+SQL PRACTICE QUESTIONS
+
+1. List all the columns of salesperson table
+select * from salespeople;
+
+2. List all columns with rating of 100
+select * from customers WHERE rating = 100;
+
+3. Find all records in customers table with NULL value in a city column
+select * from customers WHERE city IS NULL;
+
+4. Find the largest order taken by each salesperson on each date
+select snum, odate, MAX(amt)
+from orders
+group by snum, odate
+ORDER BY snum;
+
+5. Arrange the orders table by descending customer number
+select * from orders
+ORDER BY cnum DESC;
