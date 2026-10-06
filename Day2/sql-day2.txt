@@ -1,0 +1,41 @@
+6. Find which salespeople currently have orders in orders table
+SELECT DISTINCT snum
+FROM orders;
+
+SELECT DISTINCT o.snum, s.sname
+FROM orders o
+JOIN salespeople s
+ON o.snum = s.snum;
+
+Alternative:
+SELECT DISTINCT o.snum, s.sname
+FROM orders o, salespeople s
+WHERE o.snum = s.snum;
+
+7. List name of all customers matched with salespeople serving them
+SELECT c.cnum, c.cname, s.sname
+FROM customers c
+JOIN salespeople s
+ON c.snum = s.snum;
+
+8. Find the names and numbers of all salespeople who had more than one customer
+SELECT snum, COUNT(cnum)
+FROM customers
+GROUP BY snum
+HAVING COUNT(cnum) > 1;
+
+9. Count the orders of each salesperson & output the results in descending order
+SELECT snum, COUNT(onum) AS order_count
+FROM orders
+GROUP BY snum
+ORDER BY order_count DESC;
+
+10. List the customer table if and only if one or more of the customers in the customer table are located in San Jose
+SELECT *
+FROM customers
+WHERE EXISTS (
+    SELECT 1
+    FROM customers
+    WHERE city = 'San Jose'
+);
+
