@@ -1,0 +1,38 @@
+16. Find all the customers with order on October 3
+select c.cnum, c.cname
+from customers c
+JOIN orders o
+ON c.cnum = o.cnum
+WHERE o.odate = '96-10-03';
+
+17. Give the sums of the amounts from order table, grouped by date, eliminating any rows where sum was not at least 20000 above the max amount
+select odate, SUM(amt) AS total_amt, MAX(amt) AS max_amt
+from orders
+group by odate
+HAVING total_amt >= max_amt + 20000;
+
+18. select all orders that had amounts that were greater than at least one of the orders from October 6
+select onum, odate, amt
+from orders
+WHERE amt > ANY (
+    select amt
+    from orders
+    WHERE odate = '96-10-06'
+);
+
+19. Write a query that uses the EXISTS operator to extract all salespeople who have customers with rating of 300
+select sname
+from salespeople s
+WHERE EXISTS (
+    select 1
+    from customer c
+    WHERE c.snum = s.snum
+    AND c.rating = 300
+);
+
+20. Find the pairs of customers having same rating
+select c1.cname, c2.cname, c1.rating
+from customers c1
+JOIN customers c2
+ON c1.rating = c2.rating
+AND c1.cnum < c2.cnum;
